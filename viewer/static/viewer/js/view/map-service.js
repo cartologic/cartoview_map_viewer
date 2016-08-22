@@ -131,7 +131,21 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
         view.setCenter(map.config.map.center);
         view.setZoom(map.config.map.zoom);
     };
-
+    map.fit = function (geom) {
+        var view = map.olMap.getView();
+        if (!view) {
+            return;
+        }
+        var bounce = ol.animation.bounce({
+          resolution: view.getResolution() * 2
+        });
+        var pan = ol.animation.pan({
+          source: view.getCenter()
+        });
+        map.olMap.beforeRender(bounce);
+        map.olMap.beforeRender(pan);
+        view.fit(geom, map.olMap.getSize(), {maxZoom:16});
+    };
     var zoom = function(delta){
         var view = map.olMap.getView();
         if (!view) {
