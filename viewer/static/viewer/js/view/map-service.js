@@ -84,7 +84,8 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
             controls:[],
             view: new ol.View({
                 center: config.map.center,
-                zoom: config.map.zoom
+                zoom: config.map.zoom,
+                rotation: 0
             }),
             //renderer: 'canvas',
             layers:[new ol.layer.Group({

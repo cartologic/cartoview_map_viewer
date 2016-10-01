@@ -84,3 +84,16 @@ html, body, .full-height{
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+.rotation{
+    position: absolute;
+    top: 90px;
+    right: 15px;
+    z-index: 1;
+    width: 30px;
+    padding: 0;
+}
+.rotation .md-button{
+    min-width: 30px;
+    margin: 0;
+}

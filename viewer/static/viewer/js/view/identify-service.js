@@ -128,10 +128,22 @@ angular.module('cartoview.mapViewerApp').service('identifyService', function(map
                         delete f.properties[f.getGeometryName()];
                     });
                     resultsVectorSource.addFeatures(result.features);
+                    service.featuresCount = resultsVectorSource.getFeatures().length;
+
+                    if(service.featuresCount == 1){
+
+                        service.selectFeature(resultsVectorSource.getFeatures()[0])
+                    }
+                    else{
+                        service.selectFeature()
+                    }
                 };
                 $http.get(url).then(function(response) {
                     service.loading--;
                     result.features = new ol.format.GeoJSON().readFeatures(response.data);
+                    if(result.features.length == 0){
+                        return;
+                    }
                     var crs = response.data.crs.properties.name.split(":").pop();
                     if(proj4.defs('EPSG:' + crs)){
                         addFeatures(result.features, crs );

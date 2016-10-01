@@ -129,3 +129,36 @@ angular.module('cartoview.mapViewerApp').directive('zoomBar',  function(urlsHelp
         }
     }
 });
+
+
+
+angular.module('cartoview.mapViewerApp').directive('rotationBar',  function(urlsHelper) {
+    return {
+        restrict: 'E',
+        transclude: true,
+        replace: true,
+        templateUrl: urlsHelper.static + "viewer/angular-templates/view/rotation.html",
+        controller: function ($scope, mapService) {
+            $scope.rotation = 0;
+            mapService.get().then(function () {
+                mapService.map.olMap.getView().on('change:rotation', function () {
+                    $scope.rotation = mapService.map.olMap.getView().getRotation();
+                    $scope.$apply()
+                })
+            });
+            $scope.arrowStyle = function () {
+                {
+                    transform: 'rotate(' + $scope.rotation + 'deg)'
+                }
+            }
+            $scope.resetRotation = function () {
+                mapService.map.olMap.getView().setRotation(0);
+            }
+            $scope.setRotation = function () {
+                var r = mapService.map.olMap.getView().getRotation()
+                mapService.map.olMap.getView().setRotation(r + 10);
+            }
+
+        }
+    }
+});
