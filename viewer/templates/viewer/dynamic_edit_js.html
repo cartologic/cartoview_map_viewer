@@ -8,7 +8,8 @@
             cartoviewGeoserverProxy: "{% url 'cartoview_proxy' 'geoserver' '' %}",
             static: "{{ STATIC_URL }}",
             media: "{{ MEDIA_URL }}",
-            rest: "{% url 'app_manager_base_url' %}rest/app_manager/"
+            rest: "{% url 'app_manager_base_url' %}rest/app_manager/",
+            geonodeRest: "{% url 'api_api_top_level' 'api' %}/"
         };
         //{% if instance %}
         urls.viewUrl = "../../{{ instance.id  }}/view/";
