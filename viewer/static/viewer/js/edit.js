@@ -12,10 +12,10 @@
         'cartoview.viewer.urlsHelper'
     ].concat(window.angularAppDependencies));
     module.config(function($tastypieProvider, $httpProvider, urlsHelper){
-        // $tastypieProvider.setResourceUrl(urlsHelper.rest);
+        $tastypieProvider.setResourceUrl(urlsHelper.rest);
 
-        $tastypieProvider.add('cartoview', {url: urlsHelper.rest}).add('geonode', {url: urlsHelper.geonodeRest});
-        $tastypieProvider.setDefault('cartoview');
+        $tastypieProvider.add('geonode', {url: urlsHelper.geonodeRest});
+        //$tastypieProvider.setDefault('cartoview');
 
         $httpProvider.defaults.xsrfCookieName = 'csrftoken';
         $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
