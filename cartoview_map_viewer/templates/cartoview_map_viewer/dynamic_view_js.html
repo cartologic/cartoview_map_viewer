@@ -12,9 +12,9 @@
             geonodeRest: "{% url 'api_api_top_level' 'api' %}/"
         };
         //{% if instance %}
-        urls.viewUrl = "{% url 'viewer.view' instance.id %}";
+        urls.viewUrl = "{% url 'cartoview_map_viewer.view' instance.id %}";
         urls.detailsUrl = "{% url 'appinstance_detail' instance.id %}";
-        urls.editUrl = "{% url 'viewer.edit' instance.id %}";
+        urls.editUrl = "{% url 'cartoview_map_viewer.edit' instance.id %}";
         //{% endif %}
         module.constant("urlsHelper", urls);
     })();

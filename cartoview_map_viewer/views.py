@@ -18,17 +18,17 @@ def list_maps(request):
             'thumbnail': item.thumbnail_url,
             'id': item.id
         })
-    return render(request, "viewer/list_maps.html", {'maps':json.dumps(maps)})
+    return render(request, "%s/list_maps.html" % APP_NAME, {'maps':json.dumps(maps)})
 
 
 def view_map(request, map_id):
     map_obj = _resolve_map(request, map_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
-    return render(request, "viewer/view_map.html", {"map_id": map_id, 'map_obj':map_obj})
+    return render(request, "%s/view_map.html" % APP_NAME, {"map_id": map_id, 'map_obj':map_obj})
 
 
 def embed_map(request, map_id):
     map_obj = _resolve_map(request, map_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
-    return render(request, "viewer/view_map.html", {"map_id": map_id, 'map_obj': map_obj})
+    return render(request, "%s/view_map.html" % APP_NAME, {"map_id": map_id, 'map_obj': map_obj})
 
 
 def map_config(request, map_id):
@@ -62,13 +62,13 @@ def save(request, instance_id=None, app_name=APP_NAME):
     return HttpResponse(json.dumps(res_json), content_type="application/json")
 
 @login_required
-def new(request, template="viewer/edit.html", app_name=APP_NAME, context={}):
+def new(request, template="%s/edit.html" % APP_NAME, app_name=APP_NAME, context={}):
     if request.method == 'POST':
         return save(request, app_name=app_name)
     return render(request, template, context)
 
 @login_required
-def edit(request, instance_id, template="viewer/edit.html", context={}):
+def edit(request, instance_id, template="%s/edit.html" % APP_NAME, context={}):
     if request.method == 'POST':
         return save(request, instance_id)
     instance = AppInstance.objects.get(pk=instance_id)
@@ -76,7 +76,7 @@ def edit(request, instance_id, template="viewer/edit.html", context={}):
     return render(request, template, context)
 
 
-def view_app(request, instance_id, template="viewer/view_app.html", context={}):
+def view_app(request, instance_id, template="%s/view_app.html" % APP_NAME, context={}):
     instance = _resolve_appinstance(request, instance_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
     context.update({
         "map_config": instance.map.viewer_json(request.user),

@@ -10,7 +10,7 @@ angular.module('cartoview.mapViewerApp').directive('toggleButton', function(urls
       title: '@',
       icon: '@'
     },
-    templateUrl: urlsHelper.static + "viewer/angular-templates/view/toggle-button.html",
+    templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/toggle-button.html",
     replace: true,
     link: function($scope, elem, attr, ctrl) {
       // console.debug($scope);
@@ -43,7 +43,7 @@ angular.module('cartoview.mapViewerApp').directive('aboutButton', function(mapSe
                 var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
                 $mdDialog.show({
                     controller: DialogController,
-                    templateUrl: urlsHelper.static + "viewer/angular-templates/view/about-dialog.html",
+                    templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/about-dialog.html",
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose:true,
@@ -66,7 +66,7 @@ angular.module('cartoview.mapViewerApp').directive('layersSwitcher',  function(u
         restrict: 'E',
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "viewer/angular-templates/view/layers-switcher.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/layers-switcher.html",
         controller: function ($scope, mapService){
             mapService.get().then(function(){
                 $scope.overlays = mapService.map.overlays;
@@ -81,7 +81,7 @@ angular.module('cartoview.mapViewerApp').directive('layersLegend',  function(url
         restrict: 'E',
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "viewer/angular-templates/view/layers-legend.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/layers-legend.html",
         controller: function ($scope, mapService){
             mapService.get().then(function(){
                 $scope.overlays = mapService.map.overlays;
@@ -98,7 +98,7 @@ angular.module('cartoview.mapViewerApp').directive('basemapsSwitcher',  function
         restrict: 'E',
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "viewer/angular-templates/view/basemaps-switcher.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/basemaps-switcher.html",
         controller: function ($scope, $element, $compile, mapService) {
             mapService.get().then(function(){
                 var map = mapService.map.olMap;
@@ -123,7 +123,7 @@ angular.module('cartoview.mapViewerApp').directive('zoomBar',  function(urlsHelp
         restrict: 'E',
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "viewer/angular-templates/view/zoom-bar.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/zoom-bar.html",
         controller: function ($scope, mapService) {
             $scope.map = mapService.map;
         }
@@ -137,7 +137,7 @@ angular.module('cartoview.mapViewerApp').directive('rotationBar',  function(urls
         restrict: 'E',
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "viewer/angular-templates/view/rotation.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/rotation.html",
         controller: function ($scope, mapService) {
             $scope.rotation = 0;
             mapService.get().then(function () {

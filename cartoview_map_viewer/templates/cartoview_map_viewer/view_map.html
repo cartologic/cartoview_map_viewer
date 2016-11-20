@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}vendor/normalize.css">
     <link rel='stylesheet prefetch' href='{{ STATIC_URL }}vendor/angular-material/angular-material.min.css'>
     <link rel="stylesheet" href="{{ STATIC_URL }}vendor/ol3/ol.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}viewer/css/map.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}cartoview_map_viewer/css/map.css">
 
     <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/icon?family=Material+Icons'>
-    <link rel="stylesheet" href="{{ STATIC_URL }}viewer/css/style.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}cartoview_map_viewer/css/style.css">
     {% block styles %}
         
     {% endblock %}
@@ -88,8 +88,8 @@
         var MAP_CONFIG_URL = "{% url 'viewer.map_config' map_id %}";
     </script>
     {% block scripts %}
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/map.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}viewer/js/view-app.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/map.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}cartoview_map_viewer/js/view-app.js"></script>
 
 
     <script type="text/ng-template" id="search-box.html">

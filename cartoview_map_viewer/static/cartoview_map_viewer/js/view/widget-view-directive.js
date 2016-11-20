@@ -9,7 +9,7 @@ angular.module('cartoview.mapViewerApp').directive('widgetView', function(urlsHe
         scope:{
             widgetName: "@"
         },
-        templateUrl: urlsHelper.static + "viewer/angular-templates/view/widget-view.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/widget-view.html",
         controller: function($scope, appConfig, widgetsInfo) {
             $scope.config = appConfig;
             $scope.widget = widgetsInfo.get($scope.widgetName);

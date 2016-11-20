@@ -6,7 +6,7 @@ angular.module('cartoview.viewer.editor').directive('mapSelector', function(urls
         restrict: 'E',
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "viewer/angular-templates/edit/map-selector.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/edit/map-selector.html",
         controller: function($scope, dataService, $mdMedia, $mdDialog) {
             $scope.instanceObj = dataService.instanceObj;
             $scope.selected = dataService.selected;
@@ -15,7 +15,7 @@ angular.module('cartoview.viewer.editor').directive('mapSelector', function(urls
                 var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
                 $mdDialog.show({
                 controller: MapSelectorDialogController,
-                    templateUrl: urlsHelper.static + "viewer/angular-templates/edit/map-selector-dialog.html?aa",
+                    templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/edit/map-selector-dialog.html?aa",
                     parent: angular.element(document.body),
                     targetEvent: ev,
                     clickOutsideToClose:true,

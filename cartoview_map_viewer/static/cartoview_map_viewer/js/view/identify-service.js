@@ -2,7 +2,7 @@
  * Created by kamal on 7/2/16.
  */
 angular.module('cartoview.mapViewerApp').service('identifyService', function(mapService, urlsHelper, $http) {
-    var DEFAULT_ITEM_TPL = urlsHelper.static + "viewer/angular-templates/view/default-list-item-tpl.html"
+    var DEFAULT_ITEM_TPL = urlsHelper.static + "cartoview_map_viewer/angular-templates/view/default-list-item-tpl.html"
     var service = this;
     service.content = {
         results: []

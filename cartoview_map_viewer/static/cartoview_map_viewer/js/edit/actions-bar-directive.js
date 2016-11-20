@@ -6,7 +6,7 @@ angular.module('cartoview.viewer.editor').directive('actionsBar', function(urlsH
         restrict: 'E',
         transclude: true,
         replace: true,
-        templateUrl: urlsHelper.static + "viewer/angular-templates/edit/actions-bar.html",
+        templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/edit/actions-bar.html",
         controller: function($scope, dataService) {
             //TODDO add details url and view url here
             angular.extend($scope,{
