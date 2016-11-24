@@ -1,4 +1,4 @@
-{% extends "cartoview/base.html" %}
+{% extends 'cartoview/base.html' %}
 {% block title %}
     {{ block.super }} - {{ instance.title }}
 {% endblock %}
@@ -28,6 +28,7 @@
     {% endfor %}
 {% endblock %}
 {% block body_directives %}ng-app="cartoview.mapViewerApp" ng-controller="cartoview.MainController"{% endblock %}
+{% block header_toolbar %}{% endblock %}
 {% block body %}
     {% block main_panel %}
     <div class="content-panel" layout="column" ng-class="{'md-whiteframe-1dp has-content': identify.hasContent}">
