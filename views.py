@@ -83,3 +83,4 @@ def view_app(request, instance_id, template="%s/view_app.html" % APP_NAME, conte
         "instance": instance
     })
     return render(request, template, context)
+
