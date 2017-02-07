@@ -4,7 +4,9 @@
         var module = angular.module('cartoview.viewer.urlsHelper', []);
         var urls = {
             geoserver: "{{ GEOSERVER_BASE_URL }}",
+            {% if PROXY_URL %}
             proxy: "{{ PROXY_URL }}",
+            {% endif %}
             cartoviewGeoserverProxy: "{% url 'cartoview_proxy' 'geoserver' '' %}",
             static: "{{ STATIC_URL }}",
             media: "{{ MEDIA_URL }}",

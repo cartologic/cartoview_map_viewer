@@ -79,7 +79,7 @@ def edit(request, instance_id, template="%s/edit.html" % APP_NAME, context={}):
 def view_app(request, instance_id, template="%s/view_app.html" % APP_NAME, context={}):
     instance = _resolve_appinstance(request, instance_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
     context.update({
-        "map_config": instance.map.viewer_json(request.user),
+        "map_config": instance.map.viewer_json(request.user,None),
         "instance": instance
     })
     return render(request, template, context)
