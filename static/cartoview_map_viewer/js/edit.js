@@ -6,6 +6,7 @@
     window.angularAppDependencies = window.angularAppDependencies || [];
     console.debug(window.angularAppDependencies)
     var module = angular.module('cartoview.viewer.editor', [
+        'ngMaterial',
         'cartoview.base',
         'ngResourceTastypie',
         'cartoview.viewer.widgetsInfo',

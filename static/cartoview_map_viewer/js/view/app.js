@@ -1,5 +1,6 @@
 
 var app = angular.module('cartoview.mapViewerApp', [
+    'ngMaterial',
     'cartoview.base',
     'cartoview.viewer.urlsHelper',
     'cartoview.viewer.mapConfig',
