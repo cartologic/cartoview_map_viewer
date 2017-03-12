@@ -1,33 +1,33 @@
 /**
  * Created by kamal on 6/28/16.
  */
-angular.module('cartoview.viewer.editor').directive('mapSelector', function(urlsHelper) {
+angular.module('cartoview.viewer.editor').directive('mapSelector', function (urlsHelper) {
     return {
         restrict: 'E',
         transclude: true,
         replace: true,
         templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/edit/map-selector.html",
-        controller: function($scope, dataService, $mdMedia, $mdDialog) {
+        controller: function ($scope, dataService, $mdMedia, $mdDialog) {
             $scope.instanceObj = dataService.instanceObj;
             $scope.selected = dataService.selected;
-            
-            $scope.openMapsSelector = function(ev) {
-                var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+
+            $scope.openMapsSelector = function (ev) {
+                var useFullScreen = ($mdMedia('sm') || $mdMedia('xs')) && $scope.customFullscreen;
                 $mdDialog.show({
-                controller: MapSelectorDialogController,
+                    controller: MapSelectorDialogController,
                     templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/edit/map-selector-dialog.html?aa",
                     parent: angular.element(document.body),
                     targetEvent: ev,
-                    clickOutsideToClose:true,
+                    clickOutsideToClose: false,
                     fullscreen: useFullScreen
-                }).then(function(answer) {
+                }).then(function (answer) {
                     //$scope.status = 'You said the information was "' + answer + '".';
-                }, function() {
+                }, function () {
                     $scope.status = 'You cancelled the dialog.';
                 });
-                $scope.$watch(function() {
+                $scope.$watch(function () {
                     return $mdMedia('xs') || $mdMedia('sm');
-                }, function(wantsFullScreen) {
+                }, function (wantsFullScreen) {
                     $scope.customFullscreen = (wantsFullScreen === true);
                 });
             };
@@ -35,23 +35,24 @@ angular.module('cartoview.viewer.editor').directive('mapSelector', function(urls
     }
 });
 
-function MapSelectorDialogController($scope, dataService,  $mdDialog) {
+function MapSelectorDialogController($scope, dataService, $mdDialog) {
     $scope.maps = dataService.maps;
     $scope.maps.objects.$find();
     $scope.selected = {
         map: dataService.selected.map
     };
-    $scope.showCancel =  !dataService.newInstance || dataService.selected.map != undefined;
+    $scope.showCancel = !dataService.newInstance || dataService.selected.map != undefined;
     $scope.ok = function () {
-        if($scope.selected.map){
+        if ($scope.selected.map) {
             dataService.selectMap($scope.selected.map);
             $mdDialog.hide($scope.selected.map);
         }
-        else{
+        else {
             alert("You have to select a map first");
         }
     };
     $scope.cancel = function () {
-        $mdDialog.cancel();
+        if ($scope.selected.map)
+            $mdDialog.cancel();
     };
 }
