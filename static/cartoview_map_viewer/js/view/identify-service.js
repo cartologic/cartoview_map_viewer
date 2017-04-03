@@ -111,8 +111,9 @@ angular.module('cartoview.mapViewerApp').service('identifyService', function(map
                 var url = source.getGetFeatureInfoUrl(evt.coordinate, viewResolution,
                                 view.getProjection(),
                                 {'INFO_FORMAT': 'application/json', 'FEATURE_COUNT': 10});
-                if(urlsHelper.proxy)
-                    url = urlsHelper.proxy + encodeURIComponent(url);
+                //uncomment to get wfs working
+                // if(urlsHelper.proxy)
+                //     url = urlsHelper.proxy + encodeURIComponent(url);
                 service.loading++;
                 var result = {
                     layer: layer,
@@ -139,6 +140,7 @@ angular.module('cartoview.mapViewerApp').service('identifyService', function(map
                     }
                 };
                 $http.get(url).then(function(response) {
+                    console.error(url)
                     service.loading--;
                     result.features = new ol.format.GeoJSON().readFeatures(response.data);
                     if(result.features.length == 0){
@@ -146,11 +148,13 @@ angular.module('cartoview.mapViewerApp').service('identifyService', function(map
                     }
                     var crs = response.data.crs.properties.name.split(":").pop();
                     if(proj4.defs('EPSG:' + crs)){
+                        console.error(result.features)
                         addFeatures(result.features, crs );
                     }
                     else{
                         //load the proj def first
                         $http.get("http://epsg.io/?format=json&q=" + crs).then(function (res) {
+                            console.error(res.data.results)
                             proj4.defs('EPSG:' + crs, res.data.results[0].proj4);
                             addFeatures(result.features, crs);
                         });

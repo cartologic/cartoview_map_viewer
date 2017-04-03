@@ -85,9 +85,9 @@ angular.module('cartoview.mapViewerApp').directive('layersLegend',  function(url
         controller: function ($scope, mapService){
             mapService.get().then(function(){
                 $scope.overlays = mapService.map.overlays;
-                $scope.overlays.forEach(function (layer) {
-                    console.debug(layer);
-                })
+            //     $scope.overlays.forEach(function (layer) {
+            //         console.debug(layer);
+            //     })
             });
 
         }
