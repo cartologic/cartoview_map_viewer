@@ -1,13 +1,14 @@
 'use strict';
-angular.module('cartoview.mapViewerApp').service("mapService", function($http, $q, urlsHelper, mapConfig) {
-    var  map = {
+angular.module('cartoview.mapViewerApp').service("mapService", function ($http, $q, urlsHelper, mapConfig) {
+    var map = {
         loading: 0
     };
 
-    var initMap = function() {
+    var initMap = function () {
         var config = map.config;
         var overlays = [],
             baseLayers = [];
+
         function getTileLayer(layerConfig, layerSource) {
             return new ol.layer.Tile({
                 source: layerSource,
@@ -16,6 +17,7 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
                 type: layerConfig.fixed ? 'base' : ''
             });
         }
+
         var order = 1;
         config.map.layers.forEach(function (layerConfig) {
             //var layerConfig = config.map.layers[i];
@@ -38,8 +40,8 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
                         //VERSION: '1.1.1',
                         TILED: true,
                         STYLES: layerConfig.styles,
-                        FORMAT: layerConfig.format,
-                        TRANSPARENT: layerConfig.transparent
+                        FORMAT: layerConfig.format ? layerConfig.format : 'image/png',
+                        TRANSPARENT: layerConfig.transparent ? layerConfig.transparent : true
                     }
                     //,
                     // tileLoadFunction:function(imageTile, src) {
@@ -53,13 +55,14 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
                     // }
                 });
                 layer = getTileLayer(layerConfig, layerSource);
+                console.log(layerSource.getParams())
             }
 
             if (layer != null) {
                 layer.set('title', layerConfig.title);
                 if (layerConfig.fixed) {
                     baseLayers.push(layer);
-                    if(layerConfig.visibility){
+                    if (layerConfig.visibility) {
                         baseLayers.active = layer;
                     }
 
@@ -69,10 +72,10 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
                 }
                 Object.defineProperty(layer, 'visible', {
                     configurable: true,
-                    get: function() {
+                    get: function () {
                         return layer.getVisible();
                     },
-                    set: function(val) {
+                    set: function (val) {
                         layer.setVisible(val);
                     }
                 });
@@ -81,28 +84,28 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
         map.overlays = overlays;
         map.backgrounds = baseLayers;
         map.olMap = new ol.Map({
-            controls:[],
+            controls: [],
             view: new ol.View({
                 center: config.map.center,
                 zoom: config.map.zoom,
                 rotation: 0
             }),
             //renderer: 'canvas',
-            layers:[new ol.layer.Group({
-                layers:baseLayers
+            layers: [new ol.layer.Group({
+                layers: baseLayers
             }),
                 new ol.layer.Group({
-                layers:overlays
-            })]
+                    layers: overlays
+                })]
         });
         // initIdentify();
         //initSearch();
     };
 
     var deferObj = $q.defer();
-    var notRequested  = true;
-    var get = function() {
-        if(notRequested){
+    var notRequested = true;
+    var get = function () {
+        if (notRequested) {
             notRequested = false;
             // $http.get(MAP_CONFIG_URL).then(function (response) {
             //     map.config = response.data;
@@ -122,10 +125,10 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
             return;
         }
         var bounce = ol.animation.bounce({
-          resolution: view.getResolution() * 2
+            resolution: view.getResolution() * 2
         });
         var pan = ol.animation.pan({
-          source: view.getCenter()
+            source: view.getCenter()
         });
         map.olMap.beforeRender(bounce);
         map.olMap.beforeRender(pan);
@@ -138,16 +141,16 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
             return;
         }
         var bounce = ol.animation.bounce({
-          resolution: view.getResolution() * 2
+            resolution: view.getResolution() * 2
         });
         var pan = ol.animation.pan({
-          source: view.getCenter()
+            source: view.getCenter()
         });
         map.olMap.beforeRender(bounce);
         map.olMap.beforeRender(pan);
-        view.fit(geom, map.olMap.getSize(), {maxZoom:16});
+        view.fit(geom, map.olMap.getSize(), {maxZoom: 16});
     };
-    var zoom = function(delta){
+    var zoom = function (delta) {
         var view = map.olMap.getView();
         if (!view) {
             return;
@@ -167,7 +170,7 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
 
     //search
     var initSearch = function () {
-        if(!map.config.search){
+        if (!map.config.search) {
             var searchConfig = [];
             map.config.search = searchConfig;
             var urls = {};
@@ -175,25 +178,25 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
                 var source = layer.get('source');
                 var name = source.getParams().LAYERS;
                 var url = source.getUrls()[0];
-                if(!urls[url])
+                if (!urls[url])
                     urls[url] = {};
                 urls[url][name] = layer;
             });
-            angular.forEach(urls, function(layer, url){
+            angular.forEach(urls, function (layer, url) {
                 url += "?service=WFS&request=DescribeFeatureType&outputFormat=application/json&version=2.0.0";
-                if(window.PROXY_URL){
+                if (window.PROXY_URL) {
                     url = window.PROXY_URL + encodeURIComponent(url);
                 }
                 $http.get(url).then(function (res) {
                     var workspace = res.data.targetPrefix;
                     res.data.featureTypes.forEach(function (featureType) {
                         var name = workspace + ":" + featureType.name;
-                        if(url[name]){
+                        if (url[name]) {
                             var fields = [];
                             featureType.properties.forEach(function (property) {
-                               if(property.localType == 'string'){
-                                   fields.push(property.name);
-                               }
+                                if (property.localType == 'string') {
+                                    fields.push(property.name);
+                                }
                             });
                             searchConfig.push({
                                 layer: layer,
@@ -207,8 +210,6 @@ angular.module('cartoview.mapViewerApp').service("mapService", function($http, $
 
         }
     };//end initSearch
-
-
 
 
     return {
