@@ -2,7 +2,7 @@
  * Created by kamal on 7/2/16.
  */
 angular.module('cartoview.mapViewerApp').service('identifyService', function(mapService, urlsHelper, $http) {
-    var DEFAULT_ITEM_TPL = urlsHelper.static + "cartoview_map_viewer/angular-templates/view/default-list-item-tpl.html"
+    var DEFAULT_ITEM_TPL = urlsHelper.static + "cartoview_map_viewer/angular-templates/view/default-list-item-tpl.html";
     var service = this;
     service.content = {
         results: []
@@ -140,7 +140,7 @@ angular.module('cartoview.mapViewerApp').service('identifyService', function(map
                     }
                 };
                 $http.get(url).then(function(response) {
-                    console.error(url)
+                    console.error(url);
                     service.loading--;
                     result.features = new ol.format.GeoJSON().readFeatures(response.data);
                     if(result.features.length == 0){
@@ -148,13 +148,13 @@ angular.module('cartoview.mapViewerApp').service('identifyService', function(map
                     }
                     var crs = response.data.crs.properties.name.split(":").pop();
                     if(proj4.defs('EPSG:' + crs)){
-                        console.error(result.features)
+                        console.error(result.features);
                         addFeatures(result.features, crs );
                     }
                     else{
                         //load the proj def first
                         $http.get("http://epsg.io/?format=json&q=" + crs).then(function (res) {
-                            console.error(res.data.results)
+                            console.error(res.data.results);
                             proj4.defs('EPSG:' + crs, res.data.results[0].proj4);
                             addFeatures(result.features, crs);
                         });
