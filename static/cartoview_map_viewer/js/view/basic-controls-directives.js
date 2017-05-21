@@ -40,7 +40,7 @@ angular.module('cartoview.mapViewerApp').directive('aboutButton', function(mapSe
         link:function(scope, element){
             
             var showAboutDialog = function(ev) {
-                var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
+                var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && scope.customFullscreen;
                 $mdDialog.show({
                     controller: DialogController,
                     templateUrl: urlsHelper.static + "cartoview_map_viewer/angular-templates/view/about-dialog.html",

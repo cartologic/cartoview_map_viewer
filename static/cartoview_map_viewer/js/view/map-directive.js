@@ -15,9 +15,6 @@ angular.module('cartoview.mapViewerApp').directive('cartoviewMap',  function(map
                     function (value) {
                         mapService.map.olMap.updateSize();
                     });
-                // $timeout(function () {
-                //     mapService.map.olMap.updateSize();
-                // }, 500)
             })
         }
     }
