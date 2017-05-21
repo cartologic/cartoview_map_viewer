@@ -4,13 +4,14 @@
 'use strict';
 (function () {
     window.angularAppDependencies = window.angularAppDependencies || [];
-    console.debug(window.angularAppDependencies)
+    console.debug(window.angularAppDependencies);
     var module = angular.module('cartoview.viewer.editor', [
         'ngMaterial',
         'cartoview.base',
         'ngResourceTastypie',
         'cartoview.viewer.widgetsInfo',
-        'cartoview.viewer.urlsHelper'
+        'cartoview.viewer.urlsHelper',
+        'dcbImgFallback'
     ].concat(window.angularAppDependencies));
     module.config(function($tastypieProvider, $httpProvider, urlsHelper){
         $tastypieProvider.setResourceUrl(urlsHelper.rest);

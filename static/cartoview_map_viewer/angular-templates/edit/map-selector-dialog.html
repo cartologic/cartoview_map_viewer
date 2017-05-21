@@ -10,7 +10,7 @@
             <md-card ng-repeat="obj in maps.page.objects"
                 ng-click="$event.preventDefault(); selected.map = obj;"
                 ng-class="{selected:selected.map.id==obj.id}">
-                <img ng-src="{{  obj.thumbnail_url }}" class="md-card-image" alt="Washed Out">
+                <img ng-src="{{  obj.thumbnail_url }}" class="md-card-image"  fallback-src loading-src style="max-height: 210px" >
                 <md-card-title>
                     <md-card-title-text>
                         <span class="md-subhead">{{ obj.title }}</span>
