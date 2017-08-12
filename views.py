@@ -8,8 +8,10 @@ from django.contrib.auth.decorators import login_required
 from cartoview.app_manager.views import _resolve_appinstance
 from . import APP_NAME
 
+
 def list_maps(request):
-    permitted_ids = get_objects_for_user(request.user,  'base.view_resourcebase').values('id')
+    permitted_ids = get_objects_for_user(
+        request.user, 'base.view_resourcebase').values('id')
     queryset = Map.objects.filter(id__in=permitted_ids)
     maps = []
     for item in queryset:
@@ -18,21 +20,42 @@ def list_maps(request):
             'thumbnail': item.thumbnail_url,
             'id': item.id
         })
-    return render(request, "%s/list_maps.html" % APP_NAME, {'maps':json.dumps(maps)})
+    return render(
+        request, "%s/list_maps.html" %
+        APP_NAME, {
+            'maps': json.dumps(maps)})
 
 
 def view_map(request, map_id):
-    map_obj = _resolve_map(request, map_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
-    return render(request, "%s/view_map.html" % APP_NAME, {"map_id": map_id, 'map_obj':map_obj})
+    map_obj = _resolve_map(
+        request,
+        map_id,
+        'base.view_resourcebase',
+        _PERMISSION_MSG_VIEW)
+    return render(
+        request, "%s/view_map.html" %
+        APP_NAME, {
+            "map_id": map_id, 'map_obj': map_obj})
 
 
 def embed_map(request, map_id):
-    map_obj = _resolve_map(request, map_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
-    return render(request, "%s/view_map.html" % APP_NAME, {"map_id": map_id, 'map_obj': map_obj})
+    map_obj = _resolve_map(
+        request,
+        map_id,
+        'base.view_resourcebase',
+        _PERMISSION_MSG_VIEW)
+    return render(
+        request, "%s/view_map.html" %
+        APP_NAME, {
+            "map_id": map_id, 'map_obj': map_obj})
 
 
 def map_config(request, map_id):
-    map_obj = _resolve_map(request, map_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
+    map_obj = _resolve_map(
+        request,
+        map_id,
+        'base.view_resourcebase',
+        _PERMISSION_MSG_VIEW)
     config = map_obj.viewer_json(request.user)
     return HttpResponse(json.dumps(config), content_type="application/json")
 
@@ -61,11 +84,18 @@ def save(request, instance_id=None, app_name=APP_NAME):
     #     res_json["error_message"] = str(e)
     return HttpResponse(json.dumps(res_json), content_type="application/json")
 
+
 @login_required
-def new(request, template="%s/edit.html" % APP_NAME, app_name=APP_NAME, context={}):
+def new(
+        request,
+        template="%s/edit.html" %
+        APP_NAME,
+        app_name=APP_NAME,
+        context={}):
     if request.method == 'POST':
         return save(request, app_name=app_name)
     return render(request, template, context)
+
 
 @login_required
 def edit(request, instance_id, template="%s/edit.html" % APP_NAME, context={}):
@@ -76,11 +106,19 @@ def edit(request, instance_id, template="%s/edit.html" % APP_NAME, context={}):
     return render(request, template, context)
 
 
-def view_app(request, instance_id, template="%s/view_app.html" % APP_NAME, context={}):
-    instance = _resolve_appinstance(request, instance_id, 'base.view_resourcebase', _PERMISSION_MSG_VIEW)
+def view_app(
+        request,
+        instance_id,
+        template="%s/view_app.html" %
+        APP_NAME,
+        context={}):
+    instance = _resolve_appinstance(
+        request,
+        instance_id,
+        'base.view_resourcebase',
+        _PERMISSION_MSG_VIEW)
     context.update({
-        "map_config": instance.map.viewer_json(request.user,None),
+        "map_config": instance.map.viewer_json(request.user, None),
         "instance": instance
     })
     return render(request, template, context)
-
