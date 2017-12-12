@@ -7,7 +7,6 @@
             {% if PROXY_URL %}
             proxy: "{{ PROXY_URL }}",
             {% endif %}
-            cartoviewGeoserverProxy: "{% url 'cartoview_proxy' 'geoserver' '' %}",
             static: "{{ STATIC_URL }}",
             media: "{{ MEDIA_URL }}",
             rest: "{% url 'app_manager_base_url' %}rest/app_manager/",
